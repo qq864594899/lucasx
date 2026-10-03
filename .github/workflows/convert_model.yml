@@ -17,7 +17,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install coremltools==4.1 onnx onnxruntime
+          pip install coremltools==4.1 onnx
 
       - name: Convert ONNX to CoreML
         run: |
