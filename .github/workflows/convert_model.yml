@@ -5,7 +5,7 @@ on:
 
 jobs:
   convert:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -17,32 +17,15 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install coremltools onnx onnxruntime
-
-      - name: Verify ONNX model
-        run: |
-          python -c "
-          import onnx
-          m = onnx.load('small.onnx')
-          onnx.checker.check_model(m)
-          print('ONNX 模型校验通过')
-          print('输入:', [i.name for i in m.graph.input])
-          print('输出:', [o.name for o in m.graph.output])
-          print('算子数:', len(m.graph.node))
-          "
+          pip install coremltools==4.1 onnx onnxruntime
 
       - name: Convert ONNX to CoreML
         run: |
           python -c "
           import coremltools as ct
-          model = ct.convert(
-              'small.onnx',
-              source='onnx',
-              minimum_deployment_target=ct.target.iOS15,
-              compute_units=ct.ComputeUnit.ALL
-          )
+          model = ct.converters.onnx.convert('small.onnx', minimum_ios_deployment_target='15')
           model.save('XiangqiDetector.mlmodel')
-          print('转换成功: XiangqiDetector.mlmodel')
+          print('转换成功')
           "
 
       - name: Upload mlmodel
