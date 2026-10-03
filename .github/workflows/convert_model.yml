@@ -38,7 +38,7 @@ jobs:
           traced = torch.jit.trace(torch_model, dummy)
           
           mlmodel = ct.convert(traced, inputs=[ct.TensorType(shape=dummy.shape)])
-          mlmodel.save('XiangqiDetector.mlmodel')
+          mlmodel.save('XiangqiDetector.mlpackage')
           print('转换成功')
           "
 
