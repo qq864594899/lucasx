@@ -22,7 +22,7 @@ jobs:
         run: |
           python -c "
           import coremltools as ct
-          model = ct.convert('models/small.onnx', minimum_deployment_target=ct.target.iOS15)
+          model = ct.convert('small.onnx', minimum_deployment_target=ct.target.iOS15)
           model.save('XiangqiDetector.mlmodel')
           print('转换完成')
           "
